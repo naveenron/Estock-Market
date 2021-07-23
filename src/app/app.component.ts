@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormArray, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-root',
