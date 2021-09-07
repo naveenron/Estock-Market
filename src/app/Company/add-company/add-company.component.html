@@ -1,0 +1,90 @@
+<h4 *ngIf="isAddMode">Add Company</h4>
+<h4 *ngIf="!isAddMode">Edit Company</h4>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+        <div class="form-group col-4">
+            <label>Company Code</label>
+            <input type="text" formControlName="companyCode" class="form-control" [readonly]="!isAddMode"
+                [ngClass]="{ 'is-invalid': submitted && f.companyCode.errors }" />
+            <div *ngIf="submitted && f.companyCode.errors" class="invalid-feedback">
+                <div *ngIf="f.companyCode.errors.required">Company Code is required</div>
+            </div>
+        </div>
+        <div class="form-group col-4">
+            <label>Company Name</label>
+            <input type="text" formControlName="companyName" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.companyName.errors }" />
+            <div *ngIf="submitted && f.companyName.errors" class="invalid-feedback">
+                <div *ngIf="f.companyName.errors.required">Company Name is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-4">
+            <label>Company CEO</label>
+            <input type="text" formControlName="companyCeo" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.companyCeo.errors }" />
+            <div *ngIf="submitted && f.companyCeo.errors" class="invalid-feedback">
+                <div *ngIf="f.companyCeo.errors.required">Company CEO is required</div>
+            </div>
+        </div>
+        <div class="form-group col-4">
+            <label>Stocks</label>
+            <select formControlName="stockExchange" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.stockExchange.errors }">
+                <option value="">Select</option>
+                <option *ngFor="let item of this.stockList;let i = index" value="{{item.stockName}}">
+                    {{item.stockName}}
+                </option>
+            </select>
+            <div *ngIf="submitted && f.stockExchange.errors" class="invalid-feedback">
+                <div *ngIf="f.stockExchange.errors.required">Stock is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-4">
+            <label>TurnOver</label>
+            <input type="number" formControlName="turnover" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.turnover.errors }" />
+            <div *ngIf="submitted && f.turnover.errors" class="invalid-feedback">
+                <div *ngIf="f.turnover.errors.required">TurnOver is required</div>
+            </div>
+        </div>
+        <div *ngIf="!isAddMode" class="form-group col-4">
+            <label>Latest Stock Price</label>
+            <input type="number" formControlName="latestStockPrice" class="form-control" value="{{this.stockValue}}" [readonly]="true" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-4">
+            <label>WebSite</label>
+            <input type="text" formControlName="website" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.website.errors }" />
+            <div *ngIf="submitted && f.website.errors" class="invalid-feedback">
+                <div *ngIf="f.website.errors.required">WebSite is required</div>
+                <!-- <div *ngIf="f.website.errors">Company WebSite must be a valid website address</div> -->
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isAddMode">
+        <h3 class="pt-3">Stock Details</h3>
+        <p>Leave blank, if no stock price</p>
+        <div class="form-row">
+            <div class="form-group col-4">
+                <label>StockPrice</label>
+                <input type="number" formControlName="stockPrice" class="form-control" />
+                <div *ngIf="submitted">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+        </button>
+        <a routerLink="" class="btn btn-link">Cancel</a>
+    </div>
+</form>

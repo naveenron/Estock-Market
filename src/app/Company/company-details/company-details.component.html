@@ -1,0 +1,49 @@
+
+<div class="row pb-2">
+    <div class="col-md-9">
+        <h4>Company Details</h4>
+    </div>
+    <div class="col-md-3  pull-right">
+        <input class="form-control pull-right" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
+            placeholder="Enter Search">
+    </div>
+</div>
+<div class="container">
+    <div class="row ">
+        <table class="table table-striped">
+            <thead  pt-5>
+                <tr>
+                    <th style="width: 15%">Code</th>
+                    <th style="width: 25%">Name</th>
+                    <th style="width: 20%">CEO</th>
+                    <th style="width: 10%">TurnOver</th>
+                    <th style="width: 10%">Stock Price</th>
+                    <th style="width: 10%"></th>
+                    <th style="width: 10%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let company of companyList | filter:searchText!">
+                    <td>{{company.companyCode }}</td>
+                    <td>{{company.companyName }}</td>
+                    <td>{{company.companyCeo}}</td>
+                    <td>{{company.turnover}}</td>
+                    <td>{{company.stockPrice}}</td>
+                    <td style="white-space: nowrap">
+                        <a routerLink="/edit-company/{{company.companyCode}}" class="btn btn-sm btn-primary mr-1"> Edit</a>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-danger mr-1" (click)="deleteCompany(company.companyCode!)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                <tr *ngIf="!companyList">
+                    <td colspan="4" class="text-center">
+                        <span class="spinner-border spinner-border-lg align-center"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

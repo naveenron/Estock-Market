@@ -1,0 +1,71 @@
+<h4>Stock Price List</h4>
+<!-- <div style="margin-bottom: 28px;">
+    <a routerLink="" class="btn btn-primary">Company List</a>
+</div> -->
+<form [formGroup]="form">
+    <div class="form-row">
+        <div class="form-group col-3">
+            <label>Company Name</label>
+            <select formControlName="companyCode" class="form-control">
+                <option value="">Select</option>
+                <option *ngFor="let item of this.companyList;let i = index" value="{{item.companyCode}}">
+                    {{item.companyName}}
+                </option>
+            </select>
+            <!-- <div *ngIf="submitted && f.companyCode.errors" class="invalid-feedback"></div> -->
+            <!-- <div *ngIf="f.companyCode.errors.required">Select Company Name</div> -->
+        </div>
+        <div class="form-group col-3">
+            <label>Start Date</label>
+            <input type="text" formControlName="startDate" class="form-control" bsDatepicker 
+            [(bsValue)]="startDate" value="{{startDate | date :'dd-MM-yyyy'}}"/>
+            <!-- <div *ngIf="submitted"></div> -->
+        </div>
+        <div class="form-group col-3">
+            <label>End Date</label>
+            <input type="text" formControlName="endDate" class="form-control" bsDatepicker 
+            [(bsValue)]="endDate" value="{{endDate | date :'dd-MM-yyyy'}}"/>
+            <!-- <div *ngIf="submitted"></div> -->
+        </div>
+        <div style="margin-top: 28px;margin-left: 20px;">
+            <button class="btn btn-primary" (click)="Search()"> Search </button>
+        </div>                
+    </div>
+    <br />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 50%">Stock Price</th>
+                <th style="width: 50%">Date & Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let stock of stockPriceList">
+                <td>{{stock.stockPrice }}</td>
+                <td>{{stock.createdDate | date: 'dd-MM-yyyy hh:mm':'IST' }}</td>
+            </tr>
+            <tr *ngIf="!stockPriceList">
+                <td colspan="4" class="text-center">
+                    <span class="align-center"> No Records to display</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+<table>
+    <tr *ngIf="stockPriceList">
+        <td>Min Value: </td> 
+        <td *ngIf="stockPriceList | min: 'stockPrice' as result">{{ result }}</td>
+    </tr>
+    
+    <tr *ngIf="stockPriceList">
+        <td>Max Value: </td> 
+        <td *ngIf="stockPriceList | max: 'stockPrice' as result">{{ result }}</td>
+    </tr>
+    
+    <tr *ngIf="stockPriceList">
+        <td>Avg Value: </td> 
+        <td *ngIf="stockPriceList | avg: 'stockPrice' as result">{{ result }}</td>
+    </tr>
+</table>
